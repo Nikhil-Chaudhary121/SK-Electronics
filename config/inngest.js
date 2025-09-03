@@ -38,7 +38,7 @@ export const syncUserUpdation = inngest.createFunction(
         imageUrl : image_url
     }
     await connectDB()
-    await User.findByIdAndUpdate(id , userData)
+    await User.findByIdAndUpdate({_id : id }, userData, { new: true })
 
   },
 );
@@ -47,7 +47,7 @@ export const syncUserUpdation = inngest.createFunction(
 //inngest deleing user with clerk
 
 export const syncUserDeletion = inngest.createFunction(
-  { id: "sync-user-from-clerk" },
+  { id: "delete-user-from-clerk" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
     const {id} = event.data
@@ -56,3 +56,4 @@ export const syncUserDeletion = inngest.createFunction(
 
   },
 );
+
